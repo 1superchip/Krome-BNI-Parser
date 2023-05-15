@@ -287,7 +287,8 @@ def main():
     if os.path.exists(args[0]):
         with open(args[0], "rb") as fd:
             bni = ReadBNI(fd)
-            #print("Hash Table: %d\n" % bni["unk8"])
+            # print(bni["unkC"])
+            # print("Hash Table: ", bni["unk8"], bni["unk4C"])
             with open(args[1], "wt") as out_fd:
                 for line in bni["mLines"]:
                     """if line["unk8"] != -1:
@@ -302,13 +303,7 @@ def main():
                         out_fd.write('\n' + line["sectionName"] + '\n')
                     if line["fieldName"] != "":
                         out_fd.write(line["fieldName"] + ' ')
-                        for text in line["strings"]:
-                            out_fd.write(text)
-                            if (len(line["strings"]) > 1) and text != line["strings"][-1]:
-                                # if there are multiple elements on the line
-                                # add a comma after each except for the last element
-                                out_fd.write(', ')
-                        out_fd.write('\n')
+                        out_fd.write(', '.join(line["strings"]) + '\n')
                     #out_fd.write('\n')
                     
             #print(ReadBNI(fd))
